@@ -8,6 +8,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="pokemon.ttf">
+            <string>PokemonSolidNormal</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--PokedexVC-->
         <scene sceneID="tne-QT-ifu">
@@ -23,9 +28,32 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uep-oG-5rh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokedex" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3Y-gp-w9R">
+                                        <rect key="frame" x="103" y="24" width="114" height="42"/>
+                                        <fontDescription key="fontDescription" name="PokemonSolidNormal" family="Pokemon Solid" pointSize="30"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvF-iY-dqh">
+                                        <rect key="frame" x="282" y="32" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="dAT-0A-qdT"/>
+                                            <constraint firstAttribute="height" constant="30" id="vlZ-DS-dkE"/>
+                                        </constraints>
+                                        <state key="normal" image="music"/>
+                                        <connections>
+                                            <action selector="musicBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SR2-b6-fZA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="0.34509803919999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="1rc-TR-kg4"/>
+                                    <constraint firstItem="a3Y-gp-w9R" firstAttribute="centerX" secondItem="uep-oG-5rh" secondAttribute="centerX" id="6bd-8g-e4M"/>
+                                    <constraint firstItem="a3Y-gp-w9R" firstAttribute="centerY" secondItem="uep-oG-5rh" secondAttribute="centerY" constant="10" id="H0v-5p-lIf"/>
+                                    <constraint firstAttribute="trailing" secondItem="fvF-iY-dqh" secondAttribute="trailing" constant="8" id="OkK-xV-12x"/>
+                                    <constraint firstAttribute="bottom" secondItem="fvF-iY-dqh" secondAttribute="bottom" constant="8" id="nWw-ni-th7"/>
                                 </constraints>
                             </view>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="dbn-Fj-zU4">
@@ -118,5 +146,6 @@
     <resources>
         <image name="395" width="96" height="96"/>
         <image name="bg" width="1920" height="1200"/>
+        <image name="music" width="100" height="100"/>
     </resources>
 </document>
