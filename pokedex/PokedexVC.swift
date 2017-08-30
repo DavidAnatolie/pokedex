@@ -87,6 +87,10 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         view.endEditing(true)
+        
+        let poke = inSearchMode ? filteredPokemons[indexPath.row] : pokemons[indexPath.row]
+        
+        performSegue(withIdentifier: "PokemonDetailVC", sender: poke)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -125,6 +129,14 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let detailVC = segue.destination as? PokemonDetailVC {
+            if let poke = sender as? Pokemon {
+                detailVC.pokemon = poke
+            }
+        }
     }
 }
 
