@@ -51,7 +51,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         do {
             let csv = try CSV(contentsOfURL: path)
-            let rows = csv.rows
+            let rows = csv.rows // An array of dictionaries, where each dict rep a poke
             
             for row in rows {
                 let pokeId = Int(row["id"]!)!
@@ -86,7 +86,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        view.endEditing(true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -115,9 +115,9 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         } else {
             inSearchMode = true
             
-            let search = searchBar.text!.lowercased()
+            let search = searchBar.text!
             
-            filteredPokemons = pokemons.filter({$0.name.range(of: search) != nil})
+            filteredPokemons = pokemons.filter({$0.name.localizedStandardRange(of: search) != nil})
             // predicate: Is the search contained within the name of pokemon?
             collection.reloadData()
         }

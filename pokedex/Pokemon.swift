@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class Pokemon {
     
     private var _name: String
