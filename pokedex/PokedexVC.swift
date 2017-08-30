@@ -9,11 +9,14 @@
 import UIKit
 import AVFoundation
 
-class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var pokemons = [Pokemon]()
+    var filteredPokemons = [Pokemon]()
+    var inSearchMode = false
     var audioPlayer: AVAudioPlayer!
     
     override func viewDidLoad() {
@@ -21,6 +24,8 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         collection.delegate = self
         collection.dataSource = self
+        searchBar.delegate = self
+        searchBar.returnKeyType = UIReturnKeyType.done
         
         parsePokemonCSV()
         initAudio()
@@ -62,13 +67,15 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pokemons.count
+        let numOfItems = inSearchMode ? filteredPokemons.count : pokemons.count
+        
+        return numOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokeCell", for: indexPath) as? PokeCell {
             
-            let poke = pokemons[indexPath.row]
+            let poke = inSearchMode ? filteredPokemons[indexPath.row] : pokemons[indexPath.row]
             cell.configureCell(pokemon: poke)
             
             return cell
@@ -95,6 +102,29 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             audioPlayer.play()
             sender.alpha = 1.0
         }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text == nil || searchBar.text == "" {
+            
+            inSearchMode = false
+            collection.reloadData()
+            view.endEditing(true) // deal with software keyboard
+            
+        } else {
+            inSearchMode = true
+            
+            let search = searchBar.text!.lowercased()
+            
+            filteredPokemons = pokemons.filter({$0.name.range(of: search) != nil})
+            // predicate: Is the search contained within the name of pokemon?
+            collection.reloadData()
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
     }
 }
 

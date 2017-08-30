@@ -56,7 +56,7 @@
                                     <constraint firstAttribute="bottom" secondItem="fvF-iY-dqh" secondAttribute="bottom" constant="8" id="nWw-ni-th7"/>
                                 </constraints>
                             </view>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="dbn-Fj-zU4">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Pokedex" translatesAutoresizingMaskIntoConstraints="NO" id="dbn-Fj-zU4">
                                 <rect key="frame" x="0.0" y="70" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="9kI-CC-PH1"/>
@@ -136,6 +136,7 @@
                     </view>
                     <connections>
                         <outlet property="collection" destination="Bzw-jx-UK9" id="0Xs-ZW-ALi"/>
+                        <outlet property="searchBar" destination="dbn-Fj-zU4" id="t7t-oQ-Q4U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
