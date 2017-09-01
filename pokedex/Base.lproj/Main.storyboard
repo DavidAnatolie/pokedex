@@ -173,6 +173,9 @@
                                             <constraint firstAttribute="height" constant="30" id="uQJ-HR-0h5"/>
                                         </constraints>
                                         <state key="normal" image="back"/>
+                                        <connections>
+                                            <action selector="backBtnPressed:" destination="igp-sZ-vZO" eventType="touchUpInside" id="8Af-tu-CcL"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.34509803919999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -211,12 +214,24 @@
                                                             <constraint firstAttribute="height" constant="120" id="GOg-Kg-nFG"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It lives a solitary life. Its wings deliver wicked blows that can snap even the thickest of trees." lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="crb-qL-h8v">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GRM-8d-h98">
                                                         <rect key="frame" x="125" y="0.0" width="163" height="120"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It lives a solitary life. Its wings deliver wicked blows that can snap even the thickest of trees." lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="crb-qL-h8v">
+                                                                <rect key="frame" x="5" y="0.0" width="158" height="120"/>
+                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="1" green="0.34509803919999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="crb-qL-h8v" secondAttribute="bottom" id="EYt-np-bs3"/>
+                                                            <constraint firstAttribute="trailing" secondItem="crb-qL-h8v" secondAttribute="trailing" id="ToI-Wz-EyV"/>
+                                                            <constraint firstItem="crb-qL-h8v" firstAttribute="leading" secondItem="GRM-8d-h98" secondAttribute="leading" constant="5" id="Z18-I5-Y27"/>
+                                                            <constraint firstItem="crb-qL-h8v" firstAttribute="top" secondItem="GRM-8d-h98" secondAttribute="top" id="tc9-F2-3VP"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -381,7 +396,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="joM-5E-e1E">
-                                <rect key="frame" x="27.5" y="419" width="265" height="125"/>
+                                <rect key="frame" x="12.5" y="419" width="295" height="125"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="394" translatesAutoresizingMaskIntoConstraints="NO" id="uhw-Fe-BRz">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
@@ -390,8 +405,14 @@
                                             <constraint firstAttribute="width" constant="125" id="wkW-kX-NQu"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="→" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvY-dT-bHn">
+                                        <rect key="frame" x="140" y="0.0" width="15" height="125"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="395" translatesAutoresizingMaskIntoConstraints="NO" id="9Ut-oU-ZK6">
-                                        <rect key="frame" x="140" y="0.0" width="125" height="125"/>
+                                        <rect key="frame" x="170" y="0.0" width="125" height="125"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="125" id="H5c-nJ-IQb"/>
                                             <constraint firstAttribute="width" constant="125" id="v1e-IM-zz4"/>
@@ -416,7 +437,19 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="baseAttackLbl" destination="hUe-WY-tfy" id="zHb-TZ-ty2"/>
+                        <outlet property="baseImg" destination="Tgm-8n-Ub2" id="kGs-VB-C6j"/>
+                        <outlet property="currentEvoImg" destination="uhw-Fe-BRz" id="wx2-JV-3WL"/>
+                        <outlet property="defenseLbl" destination="8OH-oC-oyY" id="k7t-mj-i9z"/>
+                        <outlet property="descBoxView" destination="GRM-8d-h98" id="OP2-iA-NRe"/>
+                        <outlet property="descriptionLbl" destination="crb-qL-h8v" id="3e0-vl-JOo"/>
+                        <outlet property="evoLbl" destination="g9e-QB-kmp" id="STs-nA-Frp"/>
+                        <outlet property="heightLbl" destination="oYX-EP-aE1" id="T3n-5F-5Np"/>
                         <outlet property="nameLbl" destination="QeV-pY-mmV" id="vLf-lm-Rpv"/>
+                        <outlet property="nextEvoImg" destination="9Ut-oU-ZK6" id="ers-QK-sHV"/>
+                        <outlet property="pokedexIDLbl" destination="KzE-bv-Atz" id="38E-YG-Mfa"/>
+                        <outlet property="typeLbl" destination="4G2-Zk-PZq" id="Sjv-2X-7uI"/>
+                        <outlet property="weightLbl" destination="0Q5-Dt-MTh" id="r2T-jD-lE9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vCP-nX-JVr" userLabel="First Responder" sceneMemberID="firstResponder"/>
