@@ -22,16 +22,31 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var evoLbl: UILabel!
     @IBOutlet weak var currentEvoImg: UIImageView!
     @IBOutlet weak var nextEvoImg: UIImageView!
-    @IBOutlet weak var descBoxView: UIView!
     
     var pokemon: Pokemon!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameLbl.text = pokemon.name.capitalized
-        descBoxView.layer.cornerRadius = 10.0
+        pokemon.downloadPokemonDetails {
+            // Whatever we write will only be executed once the download is complete!!!
+            
+            self.updateUI()
+        }
 
+    }
+    
+    func updateUI() {
+        nameLbl.text = pokemon.name.capitalized
+        pokedexIDLbl.text = "\(pokemon.pokedexId)"
+        let img = UIImage(named: "\(pokemon.pokedexId)")
+        baseImg.image = img
+        defenseLbl.text = pokemon.defense
+        heightLbl.text = pokemon.height
+        weightLbl.text = pokemon.weight
+        baseAttackLbl.text = pokemon.attack
+        currentEvoImg.image = img
+        typeLbl.text = pokemon.type
     }
     
     @IBAction func backBtnPressed(_ sender: UIButton) {
