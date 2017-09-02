@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PokedexVC.swift
 //  pokedex
 //
 //  Created by David Islam on 2017-08-28.
@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AVFoundation
+import AVFoundation // AudioPlayer
 
 class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
 
@@ -24,6 +24,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         collection.delegate = self
         collection.dataSource = self
+        
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
         
@@ -37,7 +38,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
             audioPlayer.prepareToPlay()
-            audioPlayer.numberOfLoops = -1
+            audioPlayer.numberOfLoops = -1 // Plays indefinitely
             audioPlayer.play()
             
         } catch let err as NSError {
@@ -46,6 +47,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     func parsePokemonCSV() {
+        // Populate the pokemons array with 718 pokemon.
         
         let path = Bundle.main.path(forResource: "pokemon", ofType: "csv")!
         
@@ -57,7 +59,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 let pokeId = Int(row["id"]!)!
                 let pokeName = row["identifier"]!
                 
-                let poke = Pokemon(name: pokeName, pokedexId: pokeId)
+                let poke = Pokemon(name: pokeName, ID: pokeId)
                 pokemons.append(poke)
             }
             

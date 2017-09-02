@@ -19,6 +19,9 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var pokedexIDLbl: UILabel!
     @IBOutlet weak var weightLbl: UILabel!
     @IBOutlet weak var baseAttackLbl: UILabel!
+    @IBOutlet weak var speedLbl: UILabel!
+    @IBOutlet weak var abilitiesLbl: UILabel!
+    @IBOutlet weak var happinessLbl: UILabel!
     @IBOutlet weak var evoLbl: UILabel!
     @IBOutlet weak var currentEvoImg: UIImageView!
     @IBOutlet weak var nextEvoImg: UIImageView!
@@ -33,7 +36,10 @@ class PokemonDetailVC: UIViewController {
             
             self.updateUI()
         }
-
+        
+        print(pokemon.name)
+        print(pokemon.attack)
+        print(pokemon.defense)
     }
     
     func updateUI() {
@@ -47,11 +53,23 @@ class PokemonDetailVC: UIViewController {
         baseAttackLbl.text = pokemon.attack
         currentEvoImg.image = img
         typeLbl.text = pokemon.type
+        descriptionLbl.text = pokemon.description
+        happinessLbl.text = pokemon.happiness
+        speedLbl.text = pokemon.speed
+        abilitiesLbl.text = pokemon.abilities
+        
+        // evoLabel
+        if pokemon.nextEvolutionName == "" {
+            // This pokemon does not evolve
+            nextEvoImg.isHidden = true
+            evoLbl.text = "No Evolutions"
+        } else {
+            nextEvoImg.image = UIImage(named: pokemon.nextEvolutionID)
+            evoLbl.text = "Next Evolution: \(pokemon.nextEvolutionName) - LVL \(pokemon.nextEvolutionLvl)"
+        }
     }
     
     @IBAction func backBtnPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
-
 }
