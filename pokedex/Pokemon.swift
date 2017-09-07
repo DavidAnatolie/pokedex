@@ -26,8 +26,7 @@ class Pokemon {
     private var _abilities: String!
     private var _happiness: String!
     private var _speed: String!
-    
-    // Moves TO-DO
+    private var _moves = [Dictionary<String, String>]()
     
     init(name: String, ID: Int) {
         self._name = name
@@ -158,6 +157,10 @@ class Pokemon {
         }
     }
     
+    var moves: [Dictionary<String, String>] {
+        return _moves
+    }
+    
     // "lazy loading"
     func downloadPokemonDetails(completed: @escaping DownloadComplete) {
         
@@ -213,7 +216,6 @@ class Pokemon {
                                     self._description = fixedDesc
                                 }
                             }
-                            
                             completed()
                         }
                     }
@@ -221,13 +223,16 @@ class Pokemon {
                 
                 if let evolutions = dict["evolutions"] as? [Dictionary<String, Any>], evolutions.count > 0 {
                     
-                    if let level = evolutions[0]["level"] as? Int, let url = evolutions[0]["resource_uri"] as? String, let to = evolutions[0]["to"] as? String {
-                        
+                    if let level = evolutions[0]["level"] as? Int {
                         self._nextEvolutionLvl = "\(level)"
-                        
+                    }
+                    
+                    if let url = evolutions[0]["resource_uri"] as? String {
                         let evoID = url.replacingOccurrences(of: POKEMON_URL, with: "").replacingOccurrences(of: "/", with: "")
                         self._nextEvolutionID = evoID
-                        
+                    }
+                    
+                    if let to = evolutions[0]["to"] as? String {
                         if to.range(of: "mega") == nil {
                             self._nextEvolutionName = to
                         }
@@ -258,8 +263,54 @@ class Pokemon {
                 if let speed = dict["speed"] as? Int {
                     self._speed = "\(speed)"
                 }
+                
+                if let moves = dict["moves"] as? [Dictionary<String, Any>] {
+                    
+                    for move in moves {
+                        var res = Dictionary<String, String>()
+                        
+                        if let moveName = move["name"] as? String {
+                            res["moveName"] = moveName
+                        }
+                        
+                        if let uri = move["resource_uri"] as? String {
+                            
+                            let url = "\(BASE_URL)\(uri)"
+                            
+                            Alamofire.request(url).responseJSON(completionHandler: { (response) in
+                                
+                                if let dict = response.result.value as? Dictionary<String, Any> {
+                                    
+                                    if let id = dict["id"] as? Int {
+                                        res["ID"] = "\(id)"
+                                    }
+                                    
+                                    if let pow = dict["power"] as? Int {
+                                        res["power"] = "\(pow)"
+                                    }
+                                    
+                                    if let acc = dict["accuracy"] as? Int {
+                                        res["accuracy"] = "\(acc)"
+                                    }
+                                    
+                                    if let desc = dict["description"] as? String {
+                                        res["description"] = desc
+                                    }
+                                    
+                                    if let pp = dict["pp"] as? Int {
+                                        res["PP"] = "\(pp)"
+                                    }
+                                }
+                                self._moves.append(res)
+                                completed()
+                                
+                            })
+                        }
+                    }
+                }
             }
             completed()
         }
     }
+
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonDetailVC: UIViewController {
+class PokemonDetailVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var baseImg: UIImageView!
@@ -26,20 +26,25 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var currentEvoImg: UIImageView!
     @IBOutlet weak var nextEvoImg: UIImageView!
     
+    @IBOutlet weak var banner: UIView!
+    @IBOutlet var labelCollection: [UILabel]!
+    @IBOutlet var imageCollection: [UIImageView]!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     var pokemon: Pokemon!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.dataSource = self
+        tableView.delegate = self
+
         pokemon.downloadPokemonDetails {
             // Whatever we write will only be executed once the download is complete!!!
-            
             self.updateUI()
+            self.tableView.reloadData()
         }
-        
-        print(pokemon.name)
-        print(pokemon.attack)
-        print(pokemon.defense)
     }
     
     func updateUI() {
@@ -65,11 +70,57 @@ class PokemonDetailVC: UIViewController {
             evoLbl.text = "No Evolutions"
         } else {
             nextEvoImg.image = UIImage(named: pokemon.nextEvolutionID)
-            evoLbl.text = "Next Evolution: \(pokemon.nextEvolutionName) - LVL \(pokemon.nextEvolutionLvl)"
+            evoLbl.text = pokemon.nextEvolutionLvl != "" ? "Next Evolution: \(pokemon.nextEvolutionName) - LVL \(pokemon.nextEvolutionLvl)" : "Next Evolution: \(pokemon.nextEvolutionName) - LVL ???"
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pokemon.moves.count
+        
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "PokeMovesCell", for: indexPath) as? PokeMovesCell {
+            
+            let move = pokemon.moves[indexPath.row]
+            cell.configureCell(move: move)
+            
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row % 2 == 0 {
+            cell.alpha = 0.80
         }
     }
     
     @IBAction func backBtnPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func toggle(_ sender: UISegmentedControl) {
+        
+        if sender.selectedSegmentIndex == 0 {
+            isViewHidden(p: false)
+            tableView.isHidden = true
+        } else {
+            isViewHidden(p: true)
+            tableView.isHidden = false
+        }
+    }
+    
+    func isViewHidden(p: Bool) {
+        for label in labelCollection {
+            label.isHidden = p
+        }
+        
+        for img in imageCollection {
+            img.isHidden = p
+        }
+        
+        banner.isHidden = p
     }
 }
